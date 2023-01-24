@@ -1,23 +1,26 @@
 #include "ccapteurpassage.h"
 
-CCapteurPassage::CCapteurPassage(int gpio, QObject *parent) : QObject(parent)
+CCapteurPassage::CCapteurPassage(QObject *parent, int noGpio, int ordre) : QObject(parent)
 {
-    _in = new CGpio(this, gpio, IN);
-    connect(_in, &CGpio::sigErreur, this, &CCapteurPassage::on_erreur);
-    QString path("sys/class/gpio"+QString::number(gpio)+"/value");
-    //QString path("/Users/juliensoler/Desktop/test.txt");
+    _ordre = ordre;
+    _gpio = new CGpio(this, noGpio, IN);
+    QString path("/sys/class/gpio/gpio"+QString::number(noGpio)+"/value");
     _file.addPath(path);
-    connect(&_file, &QFileSystemWatcher::fileChanged, this, &CCapteurPassage::sig_coureurArrived);
+    connect(&_file, &QFileSystemWatcher::fileChanged, this, &CCapteurPassage::on_filechanged);
 
 }
 
-void CCapteurPassage::on_fileChanged(QString path)
+CCapteurPassage::~CCapteurPassage()
 {
-    path.clear();
-    emit sig_coureurArrived();
+    delete _gpio;
 }
 
-void CCapteurPassage::on_erreur(QString err)
+void CCapteurPassage::on_filechanged()
 {
-    emit sig_erreur(err);
+    QDateTime dt2 = QDateTime::currentDateTime();
+    emit sig_coureurArrived(_ordre, dt2);
 }
+
+
+
+

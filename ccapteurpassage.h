@@ -6,24 +6,25 @@
 #include <QDateTime>
 #include "biblis/cgpio.h"
 
+
 class CCapteurPassage : public QObject
 {
     Q_OBJECT
 
 public:
-    explicit CCapteurPassage(int gpio = 15, QObject *parent = nullptr);
+    explicit CCapteurPassage(QObject * parent = nullptr, int gpio = 17, int ordre = 1);
+    ~CCapteurPassage();
 
 private:
     QFileSystemWatcher _file;
-    CGpio *_in;
+    CGpio *_gpio;
+    int _ordre;
 
 signals:
-    void sig_coureurArrived();
-    void sig_erreur(QString err);
+    void sig_coureurArrived(int no, QDateTime dt2);
 
 public slots:
-    void on_fileChanged(QString path);
-    void on_erreur(QString err);
+    void on_filechanged();
 };
 
 #endif // CCAPTEURPASSAGE_H

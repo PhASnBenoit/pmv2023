@@ -18,35 +18,62 @@
     <item row="0" column="0">
      <layout class="QVBoxLayout" name="verticalLayout" stretch="0,1">
       <item>
-       <layout class="QGridLayout" name="gridLayout" rowstretch="1,0,0">
+       <layout class="QGridLayout" name="gridLayout" rowstretch="0,0,0">
         <property name="sizeConstraint">
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
-        <item row="2" column="3">
+        <item row="2" column="4">
          <widget class="QPushButton" name="pbAvm">
           <property name="text">
            <string>AVM</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="4">
+        <item row="1" column="6">
+         <widget class="QPushButton" name="pbStop">
+          <property name="text">
+           <string>STOP</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QLineEdit" name="leNomSession">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="text">
+           <string>Nom de la session</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="5">
          <widget class="QPushButton" name="pbPret">
           <property name="text">
            <string>Pret</string>
           </property>
          </widget>
         </item>
-        <item row="2" column="2">
-         <widget class="QPushButton" name="pbPreparation">
-          <property name="text">
-           <string>Préparation</string>
-          </property>
-         </widget>
-        </item>
-        <item row="2" column="5">
+        <item row="2" column="6">
          <widget class="QPushButton" name="pbPartez">
           <property name="text">
            <string>Partez</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="3">
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Gestion de la course :</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="3">
+         <widget class="QPushButton" name="pbPreparation">
+          <property name="text">
+           <string>Préparation</string>
           </property>
          </widget>
         </item>
@@ -57,20 +84,6 @@
           </property>
          </widget>
         </item>
-        <item row="2" column="0">
-         <widget class="QLineEdit" name="leNomSession">
-          <property name="text">
-           <string>Nom de la session</string>
-          </property>
-         </widget>
-        </item>
-        <item row="1" column="2">
-         <widget class="QLabel" name="label_2">
-          <property name="text">
-           <string>Gestion de la course :</string>
-          </property>
-         </widget>
-        </item>
         <item row="1" column="0">
          <widget class="QLabel" name="label">
           <property name="text">
@@ -78,10 +91,17 @@
           </property>
          </widget>
         </item>
-        <item row="1" column="5">
-         <widget class="QPushButton" name="pbStop">
+        <item row="1" column="2" rowspan="2">
+         <widget class="Line" name="line">
+          <property name="orientation">
+           <enum>Qt::Vertical</enum>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="1">
+         <widget class="QPushButton" name="pbControl">
           <property name="text">
-           <string>STOP</string>
+           <string>Prendre le contrôle</string>
           </property>
          </widget>
         </item>
@@ -1112,7 +1132,7 @@
           <string/>
          </property>
          <property name="flags">
-          <set>ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+          <set>ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item row="18" column="3">
@@ -1160,7 +1180,7 @@
           <string/>
          </property>
          <property name="flags">
-          <set>ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
+          <set>ItemIsEditable|ItemIsDragEnabled|ItemIsDropEnabled|ItemIsUserCheckable|ItemIsEnabled</set>
          </property>
         </item>
         <item row="19" column="3">
@@ -1218,15 +1238,22 @@
     <addaction name="actionRedemarrage"/>
     <addaction name="actionArreter"/>
    </widget>
-   <widget class="QMenu" name="menuOutils">
+   <widget class="QMenu" name="menuCSV">
     <property name="title">
-     <string>Outils</string>
+     <string>CSV</string>
     </property>
-    <addaction name="actionExport_CSV"/>
-    <addaction name="actionTest_Capteur"/>
+    <addaction name="actionImport_CSV"/>
+    <addaction name="actionExportCSV"/>
+   </widget>
+   <widget class="QMenu" name="menugetControl">
+    <property name="title">
+     <string>getControl</string>
+    </property>
+    <addaction name="actionGetControl_2"/>
    </widget>
    <addaction name="menuSyst_me"/>
-   <addaction name="menuOutils"/>
+   <addaction name="menuCSV"/>
+   <addaction name="menugetControl"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="actionRedemarrage">
@@ -1252,6 +1279,26 @@
   <action name="actionTest_Capteur">
    <property name="text">
     <string>Test Capteurs</string>
+   </property>
+  </action>
+  <action name="actionImport_CSV">
+   <property name="text">
+    <string>Import CSV</string>
+   </property>
+  </action>
+  <action name="actionExportCSV">
+   <property name="text">
+    <string>Export CSV</string>
+   </property>
+  </action>
+  <action name="actionGetControl">
+   <property name="text">
+    <string>GetControl</string>
+   </property>
+  </action>
+  <action name="actionGetControl_2">
+   <property name="text">
+    <string>getControl</string>
    </property>
   </action>
  </widget>
