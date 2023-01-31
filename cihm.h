@@ -43,7 +43,7 @@ private slots:
     void on_pbAvm_clicked();
     void on_pbPret_clicked();
     void on_pbPartez_clicked();
-    void on_pbStop_clicked();
+    void on_pbArret_clicked();
     void on_pbStart_clicked();// Start la session => Devient Stop la session
     void on_tableWidget_cellClicked(int row, int column);
     void on_reboot();
@@ -66,12 +66,14 @@ signals:
     void sig_nomSession(QString nomSession);
     void sig_toWorkerThread();
     void sig_ihmGetControl();
+    void sig_finCourse();
 
 public slots:
     void on_badPassword();
     void on_appRemoteGetControl();
     void on_newBtnState(T_BUTTONS buttons);
     void on_stopRun();
+    void on_finCourse();
 
 private:
     Ui::CIhm *ui;

@@ -33,7 +33,7 @@ void CCsv::on_QFileDialog4Path()
 
 void CCsv::on_exportCSV()
 {
-
+    _file.remove();
 }
 
 

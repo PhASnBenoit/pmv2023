@@ -57,7 +57,7 @@ CIhm::CIhm(QWidget *parent)
     ui->pbAvm->setDisabled(true);
     ui->pbPret->setDisabled(true);
     ui->pbPartez->setDisabled(true);
-    ui->pbStop->setDisabled(true);
+    ui->pbArret ->setDisabled(true);
     ui->pbControl->setDisabled(true);
     ui->pbControl->setVisible(false);
 
@@ -74,6 +74,7 @@ CIhm::CIhm(QWidget *parent)
     connect(ui->actionGetControl_2, &QAction::triggered, _app, &CApp::on_getControl);
     // connect(sig_finCourse --> app) apres creation capp
     connect(_app, &CApp::sig_endRun, this, &CIhm::on_stopRun);
+    connect(this, &CIhm::sig_finCourse, this, &CIhm::on_finCourse);
 }
 
 CIhm::~CIhm()
@@ -140,7 +141,7 @@ void CIhm::on_pbPartez_clicked()
     ui->pbAvm->setDisabled(true);
     ui->pbPret->setDisabled(true);
     ui->pbPartez->setDisabled(true);
-    ui->pbStop->setEnabled(true);
+    ui->pbArret->setEnabled(true);
 
     connect(_app, &CApp::sig_resTemps, this, &CIhm::on_afficherResTemps);
     connect(_app, &CApp::sig_resVitesse, this, &CIhm::on_afficherResVitesse);
@@ -149,7 +150,7 @@ void CIhm::on_pbPartez_clicked()
 }
 
 
-void CIhm::on_pbStop_clicked()
+void CIhm::on_pbArret_clicked()
 {
     T_DATAS datas;
     _zdc->getDatas(datas);
@@ -161,9 +162,10 @@ void CIhm::on_pbStop_clicked()
 
     // emit sig_finCourse()
 
+    emit sig_finCourse();
+
     // avertir _app de l'arret de course
 }
-
 
 void CIhm::on_pbStart_clicked()
 {
@@ -208,7 +210,14 @@ void CIhm::on_pbStart_clicked()
             ui->pbPartez->setDisabled(true);
             ui->leNomSession->setReadOnly(false);
         }
-    }//IF STOP
+    if(ui->pbArret->text()=="ARRET")
+        {
+            QMessageBox msgBox;
+            msgBox.setText("La Compétition est terminée");
+            msgBox.setDefaultButton(QMessageBox::Ok);
+            msgBox.exec();
+        }
+     }//IF STOP
 }
 
 void CIhm::on_btnState(char boutons)
@@ -231,7 +240,7 @@ void CIhm::on_btnState(char boutons)
         on_pbPartez_clicked();
         break;
     case 32:
-        on_pbStop_clicked();
+        on_pbArret_clicked();
         break;
     default:
         break;
@@ -254,7 +263,7 @@ void CIhm::on_quitterApp()
      if(reponse == QMessageBox::No){
      }else
          QCoreApplication::quit();
-}
+}// Quitter
 
 
 void CIhm::on_tableWidget_cellClicked(int row, int column)
@@ -274,8 +283,7 @@ void CIhm::on_reboot()
     {
     system("/usr/bin/systemctl reboot");
     }
-}
-
+}// Redémarrage
 
 void CIhm::on_shutdown()
 {
@@ -289,10 +297,11 @@ void CIhm::on_shutdown()
     {
     system("sudo shutdown -h now");
     }
-}
+}// Eteindre
             //----BARRE DE MENU----//
 
-                        //
+
+
 
             //----AFFICHAGE IHM----//
 void CIhm::on_afficherResTemps(QString resultatTemps, int ordre, int ligne)
@@ -350,7 +359,7 @@ void CIhm::on_appRemoteGetControl()
     ui->pbPreparation->setDisabled(true);
     ui->pbPret->setDisabled(true);
     ui->pbPartez->setDisabled(true);
-    ui->pbStop->setDisabled(true);
+    ui->pbArret->setDisabled(true);
 
     ui->pbControl->setVisible(true);
     ui->pbControl->setDisabled(false);
@@ -371,15 +380,20 @@ void CIhm::on_newBtnState(T_BUTTONS buttons)
     if(buttons.btnGo){
         on_pbPartez_clicked();
     }
-    if(buttons.btnStop){
-        on_pbStop_clicked();
+    if(buttons.btnArret){
+        on_pbArret_clicked();
     }
 }
 
 void CIhm::on_stopRun()
 {
     ui->pbPreparation->setEnabled(true);
-    ui->pbStop->setDisabled(true);
+    ui->pbArret->setDisabled(true);
+}
+
+void CIhm::on_finCourse()
+{
+    ui->pbArret->setEnabled(true);
 }
 
 
@@ -399,9 +413,9 @@ void CIhm::on_pbControl_clicked()
          ui->pbPartez->setEnabled(true);
     }
     if(_buttons.btnGo){
-        ui->pbStop->setEnabled(true);
+        ui->pbArret->setEnabled(true);
     }
-    if(_buttons.btnStop){
+    if(_buttons.btnArret){
         ui->pbPreparation->setEnabled(true);
     }
     emit sig_ihmGetControl();

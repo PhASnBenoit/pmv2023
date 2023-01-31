@@ -21,7 +21,7 @@ typedef struct s_buttons {
     bool btnAVM;
     bool btnReady;
     bool btnGo;
-    bool btnStop;
+    bool btnArret;
 } T_BUTTONS;
 
 typedef struct s_data {
